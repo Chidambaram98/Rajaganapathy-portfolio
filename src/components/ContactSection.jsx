@@ -207,7 +207,7 @@ export function ContactSection() {
                       value={formData.name}
                       onChange={handleChange}
                       className="w-full px-3 sm:px-4 py-2.5 text-sm bg-background border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary"
-                      placeholder="John Doe"
+                      placeholder="Udhaya Kumar"
                       required
                     />
                   </div>
@@ -223,7 +223,7 @@ export function ContactSection() {
                       value={formData.email}
                       onChange={handleChange}
                       className="w-full px-3 sm:px-4 py-2.5 text-sm bg-background border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary"
-                      placeholder="john@example.com"
+                      placeholder="udhaykumar@example.com"
                       required
                     />
                   </div>
