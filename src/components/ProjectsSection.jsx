@@ -3,7 +3,7 @@ import { ExternalLink, Github, Zap, Users, Shield, Globe, BarChart3, Lock, Cpu, 
 export function ProjectsSection() {
   const projects = [
     {
-      title: 'CAFS360 - CRM System',
+      title: 'CAFS 360 - CRM',
       description: 'Comprehensive CRM system for BPO operations with client management, lead tracking, and automated workflow features. Handles multiple user roles and complex business logic.',
       technologies: ['Node.js', 'Express.js', 'React', 'MongoDB', 'JavaScript', 'Puppeteer'],
       link: '#',
@@ -47,7 +47,7 @@ export function ProjectsSection() {
     {
       title: 'Demo Travel Website',
       description: 'Responsive travel booking website with destination browsing, package details, booking forms, and interactive maps. Modern UI with smooth animations.',
-      technologies: ['React', 'JavaScript', 'Tailwind CSS', 'REST APIs', 'Google Maps API'],
+      technologies: ['React', 'JavaScript', 'Tailwind CSS', 'PHP', 'MySql'],
       link: '#',
       github: '#',
       icon: Globe,
@@ -165,41 +165,6 @@ export function ProjectsSection() {
                           {tech}
                         </span>
                       ))}
-                    </div>
-                  </div>
-
-                  {/* Project Footer */}
-                  <div className="px-8 py-6 border-t border-border/50 bg-gradient-to-r from-background/20 to-background/10">
-                    <div className="flex items-center justify-between">
-                      <div className="flex gap-4">
-                        <a
-                          href={project.link}
-                          className="group/link flex items-center gap-2 text-primary hover:text-purple-500 transition-colors"
-                          target="_blank"
-                          rel="noopener noreferrer"
-                        >
-                          <ExternalLink className="w-4 h-4 group-hover/link:scale-110 transition-transform" />
-                          <span className="text-sm font-medium">Live Demo</span>
-                        </a>
-                        <a
-                          href={project.github}
-                          className="group/link flex items-center gap-2 text-primary hover:text-purple-500 transition-colors"
-                          target="_blank"
-                          rel="noopener noreferrer"
-                        >
-                          <Github className="w-4 h-4 group-hover/link:scale-110 transition-transform" />
-                          <span className="text-sm font-medium">Source Code</span>
-                        </a>
-                      </div>
-                      
-                      <div className="flex items-center gap-2">
-                        {project.stats.map((stat, statIndex) => (
-                          <div key={statIndex} className="text-right">
-                            <p className="text-xs text-muted-foreground">{stat.label}</p>
-                            <p className="text-sm font-semibold text-foreground">{stat.value}</p>
-                          </div>
-                        ))}
-                      </div>
                     </div>
                   </div>
                 </div>

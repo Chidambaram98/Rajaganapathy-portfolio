@@ -71,11 +71,6 @@ export function ContactSection() {
         setError(result.message || 'Failed to send message');
       }
 
-      // // Use absolute URL for production, relative for development
-      // const apiUrl = import.meta.env.PROD 
-      //   ? 'https://your-backend-url.com/api/contact' 
-      //   : '/api/contact';
-      
     } catch (err) {
       console.error('Contact form error:', err);
       setError('Failed to send message. Please try again.');
@@ -144,7 +139,7 @@ export function ContactSection() {
               <p className="text-xs sm:text-sm text-muted-foreground mb-3">Connect with me</p>
               <div className="flex gap-2 sm:gap-3">
                 <a
-                  href="https://linkedin.com/in/chidambaram-s"
+                  href="https://www.linkedin.com/in/chidambaram-senapathy-a16833298/"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="w-10 h-10 sm:w-11 sm:h-11 rounded-lg bg-card border border-border flex items-center justify-center text-foreground hover:bg-primary hover:text-white hover:border-primary transition-all duration-200"
@@ -153,7 +148,7 @@ export function ContactSection() {
                   <Linkedin className="w-4 h-4 sm:w-5 sm:h-5" />
                 </a>
                 <a
-                  href="https://github.com/chidambaram-s"
+                  href="https://github.com/Chidambaram98"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="w-10 h-10 sm:w-11 sm:h-11 rounded-lg bg-card border border-border flex items-center justify-center text-foreground hover:bg-primary hover:text-white hover:border-primary transition-all duration-200"

@@ -186,7 +186,7 @@ export function Sidebar() {
         {/* Social Links */}
         <div className="flex gap-3">
           <a
-            href="https://linkedin.com/in/chidambaram-s"
+            href="https://www.linkedin.com/in/chidambaram-senapathy-a16833298/"
             target="_blank"
             rel="noopener noreferrer"
             className="flex-1 h-12 rounded-xl bg-gradient-to-br from-blue-500/10 to-blue-500/5 border border-blue-500/20 flex items-center justify-center text-blue-500 hover:bg-blue-500 hover:text-white hover:border-blue-500 transition-all duration-300 group"
@@ -195,7 +195,7 @@ export function Sidebar() {
             <Linkedin className="w-5 h-5 group-hover:scale-110 transition-transform" />
           </a>
           <a
-            href="https://github.com/chidambaram-s"
+            href="https://github.com/Chidambaram98"
             target="_blank"
             rel="noopener noreferrer"
             className="flex-1 h-12 rounded-xl bg-gradient-to-br from-gray-500/10 to-gray-500/5 border border-gray-500/20 flex items-center justify-center text-foreground hover:bg-gray-800 hover:text-white hover:border-gray-800 transition-all duration-300 group"
