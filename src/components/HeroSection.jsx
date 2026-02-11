@@ -27,9 +27,8 @@ export function HeroSection() {
       setDownloadSuccess(false);
 
       // Try Local Resume First
-      if (resumePDF) {
         const link = document.createElement("a");
-        link.href = resumePDF;
+          link.href = "/raja_ganapathy_resume.pdf"; 
         link.download = "Raja_Ganapathy_Resume.pdf";
         link.target = "_blank";
         document.body.appendChild(link);
@@ -37,9 +36,6 @@ export function HeroSection() {
         document.body.removeChild(link);
 
         setDownloadSuccess(true);
-      } else {
-        throw new Error("Local resume not found");
-      }
     } catch (localError) {
       console.warn("Local resume failed. Trying API...", localError);
 
@@ -60,6 +56,7 @@ export function HeroSection() {
       }, 3000);
     }
   };
+
   const scrollToSection = (sectionId) => {
     const element = document.getElementById(sectionId);
     if (element) {

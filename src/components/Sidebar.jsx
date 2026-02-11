@@ -55,19 +55,15 @@ export function Sidebar() {
       setDownloadSuccess(false);
       setDownloadError("");
 
-      if (resumePDF) {
-        const link = document.createElement("a");
-        link.href = resumePDF;
-        link.download = "Raja_Ganapathy_Resume.pdf";
-        document.body.appendChild(link);
-        link.click();
-        document.body.removeChild(link);
+      const link = document.createElement("a");
+      link.href = "/raja_ganapathy_resume.pdf"; 
+      link.download = "Raja_Ganapathy_Resume.pdf";
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
 
-        setDownloadSuccess(true);
-        setTimeout(() => setDownloadSuccess(false), 3000);
-      } else {
-        throw new Error("Resume file not found");
-      }
+      setDownloadSuccess(true);
+      setTimeout(() => setDownloadSuccess(false), 3000);
     } catch (error) {
       console.error("Resume download failed:", error);
       setDownloadError("Unable to download resume. Please try again.");
