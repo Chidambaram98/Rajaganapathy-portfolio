@@ -21,7 +21,6 @@ import {
 } from "lucide-react";
 import { useTheme } from "../context/ThemeContext";
 import { useState } from "react";
-import resumePDF from "../assets/raja_ganapathy_resume.pdf";
 
 export function Sidebar() {
   const { theme, toggleTheme } = useTheme();

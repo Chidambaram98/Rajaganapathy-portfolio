@@ -2,7 +2,6 @@ import { Download, Eye, ChevronDown,Smartphone,Upload,Layers, Sparkles, Code, Se
 import { useState, useEffect } from 'react';
 import { TypeAnimation } from 'react-type-animation';
 import { api } from '../services/api'; 
-import resumePDF from "../assets/raja_ganapathy_resume.pdf";
 
 export function HeroSection() {
   const [downloading, setDownloading] = useState(false);
@@ -28,7 +27,7 @@ export function HeroSection() {
 
       // Try Local Resume First
         const link = document.createElement("a");
-          link.href = "/raja_ganapathy_resume.pdf"; 
+        link.href = "/raja_ganapathy_resume.pdf"; 
         link.download = "Raja_Ganapathy_Resume.pdf";
         link.target = "_blank";
         document.body.appendChild(link);
