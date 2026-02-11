@@ -1,64 +1,77 @@
-import { Moon, Sun, Mail, Phone, MapPin, Linkedin, Github, Download, Sparkles, ChevronRight, Home, Code, Briefcase, FolderOpen, GraduationCap, User, Award, Loader2, CheckCircle } from 'lucide-react';
-import { useTheme } from '../context/ThemeContext';
-import { api } from '../services/api';
-import { useState } from 'react';
+import {
+  Moon,
+  Sun,
+  Mail,
+  Phone,
+  MapPin,
+  Linkedin,
+  Github,
+  Download,
+  Sparkles,
+  ChevronRight,
+  Home,
+  Code,
+  Briefcase,
+  FolderOpen,
+  GraduationCap,
+  User,
+  Award,
+  Loader2,
+  CheckCircle,
+} from "lucide-react";
+import { useTheme } from "../context/ThemeContext";
+import { useState } from "react";
+import resumePDF from "../assets/raja_ganapathy_resume.pdf";
 
 export function Sidebar() {
   const { theme, toggleTheme } = useTheme();
   const [downloading, setDownloading] = useState(false);
   const [downloadSuccess, setDownloadSuccess] = useState(false);
-  const [downloadError, setDownloadError] = useState('');
+  const [downloadError, setDownloadError] = useState("");
 
   const scrollToSection = (sectionId) => {
     const element = document.getElementById(sectionId);
     if (element) {
-      element.scrollIntoView({ 
-        behavior: 'smooth', 
-        block: 'start' 
+      element.scrollIntoView({
+        behavior: "smooth",
+        block: "start",
       });
     }
   };
 
   const navItems = [
-    { id: 'about', label: 'Home', icon: Home },
-    { id: 'skills', label: 'Skills', icon: Code },
-    { id: 'experience', label: 'Experience', icon: Briefcase },
-    { id: 'projects', label: 'Projects', icon: FolderOpen },
-    { id: 'education', label: 'Education', icon: GraduationCap },
-    { id: 'contact', label: 'Contact', icon: Mail },
+    { id: "about", label: "Home", icon: Home },
+    { id: "synopsis", label: "Synopsis", icon: User },
+    { id: "skills", label: "Skills", icon: Code },
+    { id: "experience", label: "Experience", icon: Briefcase },
+    { id: "projects", label: "Projects", icon: FolderOpen },
+    { id: "education", label: "Education", icon: GraduationCap },
+    { id: "contact", label: "Contact", icon: Mail },
   ];
 
   const handleResumeDownload = async () => {
     try {
       setDownloading(true);
       setDownloadSuccess(false);
-      setDownloadError('');
-      
-      // Use the API service to download resume
-      const result = await api.downloadResume();
-      
-      // Show success message
-      setDownloadSuccess(true);
-      setTimeout(() => setDownloadSuccess(false), 3000);
-      
+      setDownloadError("");
+
+      if (resumePDF) {
+        const link = document.createElement("a");
+        link.href = resumePDF;
+        link.download = "Raja_Ganapathy_Resume.pdf";
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+
+        setDownloadSuccess(true);
+        setTimeout(() => setDownloadSuccess(false), 3000);
+      } else {
+        throw new Error("Resume file not found");
+      }
     } catch (error) {
-      console.error('Resume download error:', error);
-      setDownloadError('Failed to download resume. Please try again.');
-      
-      // Fallback: Try direct download from public folder
-      setTimeout(() => {
-        try {
-          const link = document.createElement('a');
-          link.href = '/Chidambaram_Resume.pdf';
-          link.download = 'Chidambaram_Senapathy_Resume.pdf';
-          link.target = '_blank';
-          document.body.appendChild(link);
-          link.click();
-          document.body.removeChild(link);
-        } catch (fallbackError) {
-          console.error('Fallback also failed:', fallbackError);
-        }
-      }, 100);
+      console.error("Resume download failed:", error);
+      setDownloadError("Unable to download resume. Please try again.");
+      setTimeout(() => setDownloadError(""), 3000);
     } finally {
       setDownloading(false);
     }
@@ -66,7 +79,8 @@ export function Sidebar() {
 
   return (
     <aside className="fixed left-0 top-0 h-screen w-80 bg-gradient-to-b from-background via-background to-background/95 border-r border-border/50 overflow-y-auto flex flex-col z-40">
-      {/* Success Message */}
+      
+      {/* SUCCESS MESSAGE */}
       {downloadSuccess && (
         <div className="fixed top-4 right-4 z-50 animate-slide-down">
           <div className="flex items-center gap-2 px-4 py-3 bg-green-500/10 border border-green-500/20 rounded-xl backdrop-blur-sm">
@@ -78,13 +92,10 @@ export function Sidebar() {
         </div>
       )}
 
-      {/* Error Message */}
+      {/* ERROR MESSAGE */}
       {downloadError && (
         <div className="fixed top-4 right-4 z-50 animate-slide-down">
           <div className="flex items-center gap-2 px-4 py-3 bg-red-500/10 border border-red-500/20 rounded-xl backdrop-blur-sm">
-            <div className="w-5 h-5 bg-red-500 rounded-full flex items-center justify-center">
-              <span className="text-white text-xs font-bold">!</span>
-            </div>
             <span className="text-sm font-medium text-red-600">
               {downloadError}
             </span>
@@ -92,131 +103,88 @@ export function Sidebar() {
         </div>
       )}
 
-      {/* Profile Section */}
+      {/* PROFILE SECTION */}
       <div className="p-8 border-b border-border/50">
         <div className="relative mb-6">
           <div className="absolute inset-0 bg-gradient-to-r from-primary to-purple-500 rounded-3xl blur-xl opacity-20"></div>
           <div className="relative w-32 h-32 mx-auto rounded-full bg-gradient-to-br from-primary via-purple-500 to-pink-500 flex items-center justify-center">
-            <span className="text-4xl font-bold text-white">CS</span>
-          </div>
-          <div className="absolute -bottom-2 -right-2 w-10 h-10 rounded-full bg-gradient-to-br from-green-500 to-emerald-500 border-4 border-background flex items-center justify-center">
-            <Sparkles className="w-4 h-4 text-white" />
+            <span className="text-4xl font-bold text-white">RG</span>
           </div>
         </div>
-        
+
         <h2 className="text-2xl font-bold text-center text-foreground mb-1">
-          Chidambaram Senapathy
+          Raja Ganapathy D
         </h2>
+
         <div className="flex items-center justify-center gap-2 mb-3">
           <Award className="w-4 h-4 text-primary" />
           <p className="text-sm font-medium text-primary">
             Associate Software Engineer
           </p>
         </div>
+
         <p className="text-sm text-center text-muted-foreground leading-relaxed">
-          Full Stack Developer specializing in JavaScript, Node.js, and React. Passionate about building scalable applications and optimizing backend systems.
+          Flutter Developer specializing in Dart and cross-platform mobile app
+          development. Focused on scalable architecture, performance
+          optimization, and secure API integration.
         </p>
       </div>
 
-      {/* Navigation */}
+      {/* NAVIGATION */}
       <nav className="flex-1 p-6">
-        <div className="mb-8">
-          <h3 className="text-sm font-semibold text-muted-foreground mb-4 px-2">NAVIGATION</h3>
-          <ul className="space-y-2">
-            {navItems.map((item) => {
-              const Icon = item.icon;
-              return (
-                <li key={item.id}>
-                  <button
-                    onClick={() => scrollToSection(item.id)}
-                    className="w-full text-left px-4 py-3 rounded-xl hover:bg-accent text-foreground hover:text-primary transition-all duration-300 flex items-center justify-between group"
-                  >
-                    <div className="flex items-center gap-3">
-                      <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-primary/10 to-primary/5 border border-primary/20 flex items-center justify-center group-hover:scale-110 transition-transform">
-                        <Icon className="w-5 h-5" />
-                      </div>
-                      <span className="font-medium">{item.label}</span>
+        <h3 className="text-sm font-semibold text-muted-foreground mb-4 px-2">
+          NAVIGATION
+        </h3>
+        <ul className="space-y-2">
+          {navItems.map((item) => {
+            const Icon = item.icon;
+            return (
+              <li key={item.id}>
+                <button
+                  onClick={() => scrollToSection(item.id)}
+                  className="w-full text-left px-4 py-3 rounded-xl hover:bg-accent text-foreground hover:text-primary transition-all duration-300 flex items-center justify-between group"
+                >
+                  <div className="flex items-center gap-3">
+                    <div className="w-10 h-10 rounded-lg bg-primary/10 border border-primary/20 flex items-center justify-center group-hover:scale-110 transition-transform">
+                      <Icon className="w-5 h-5" />
                     </div>
-                    <ChevronRight className="w-4 h-4 text-muted-foreground group-hover:text-primary group-hover:translate-x-1 transition-all" />
-                  </button>
-                </li>
-              );
-            })}
-          </ul>
-        </div>
-
-        {/* Quick Contact */}
-        <div className="mb-8">
-          <h3 className="text-sm font-semibold text-muted-foreground mb-4 px-2">CONTACT INFO</h3>
-          <div className="space-y-3">
-            <div className="flex items-center gap-3 text-sm text-foreground/70">
-              <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-primary/10 to-primary/5 border border-primary/20 flex items-center justify-center">
-                <Mail className="w-3.5 h-3.5" />
-              </div>
-              <a 
-                href="mailto:chidambaramsenapathy@gmail.com"
-                className="hover:text-primary transition-colors"
-              >
-                chidambaramsenapathy@gmail.com
-              </a>
-            </div>
-            <div className="flex items-center gap-3 text-sm text-foreground/70">
-              <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-primary/10 to-primary/5 border border-primary/20 flex items-center justify-center">
-                <Phone className="w-3.5 h-3.5" />
-              </div>
-              <a 
-                href="tel:+918667877957"
-                className="hover:text-primary transition-colors"
-              >
-                +91 86678 77957
-              </a>
-            </div>
-            <div className="flex items-center gap-3 text-sm text-foreground/70">
-              <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-primary/10 to-primary/5 border border-primary/20 flex items-center justify-center">
-                <MapPin className="w-3.5 h-3.5" />
-              </div>
-              <span>Namakkal, Tamil Nadu</span>
-            </div>
-          </div>
-        </div>
+                    <span className="font-medium">{item.label}</span>
+                  </div>
+                  <ChevronRight className="w-4 h-4 text-muted-foreground group-hover:text-primary group-hover:translate-x-1 transition-all" />
+                </button>
+              </li>
+            );
+          })}
+        </ul>
       </nav>
 
-      {/* Footer Actions */}
+      {/* FOOTER */}
       <div className="p-6 border-t border-border/50 space-y-4">
-        {/* Social Links */}
+        
+        {/* SOCIAL LINKS */}
         <div className="flex gap-3">
           <a
-            href="https://www.linkedin.com/in/chidambaram-senapathy-a16833298/"
+            href="https://www.linkedin.com/in/raja-ganapathy-d-4341332a6"
             target="_blank"
             rel="noopener noreferrer"
-            className="flex-1 h-12 rounded-xl bg-gradient-to-br from-blue-500/10 to-blue-500/5 border border-blue-500/20 flex items-center justify-center text-blue-500 hover:bg-blue-500 hover:text-white hover:border-blue-500 transition-all duration-300 group"
-            aria-label="LinkedIn"
+            className="flex-1 h-12 rounded-xl bg-blue-500/10 border border-blue-500/20 flex items-center justify-center text-blue-500 hover:bg-blue-500 hover:text-white transition-all duration-300"
           >
-            <Linkedin className="w-5 h-5 group-hover:scale-110 transition-transform" />
+            <Linkedin className="w-5 h-5" />
           </a>
+
           <a
-            href="https://github.com/Chidambaram98"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="flex-1 h-12 rounded-xl bg-gradient-to-br from-gray-500/10 to-gray-500/5 border border-gray-500/20 flex items-center justify-center text-foreground hover:bg-gray-800 hover:text-white hover:border-gray-800 transition-all duration-300 group"
-            aria-label="GitHub"
+            href="mailto:rajaganapathy032@gmail.com"
+            className="flex-1 h-12 rounded-xl bg-primary/10 border border-primary/20 flex items-center justify-center text-primary hover:bg-primary hover:text-white transition-all duration-300"
           >
-            <Github className="w-5 h-5 group-hover:scale-110 transition-transform" />
-          </a>
-          <a
-            href="mailto:chidambaramsenapathy@gmail.com"
-            className="flex-1 h-12 rounded-xl bg-gradient-to-br from-primary/10 to-primary/5 border border-primary/20 flex items-center justify-center text-primary hover:bg-primary hover:text-white hover:border-primary transition-all duration-300 group"
-            aria-label="Email"
-          >
-            <Mail className="w-5 h-5 group-hover:scale-110 transition-transform" />
+            <Mail className="w-5 h-5" />
           </a>
         </div>
 
-        {/* Resume Download Button */}
+        {/* RESUME BUTTON */}
         <button
           onClick={handleResumeDownload}
           disabled={downloading}
-          className="w-full h-12 rounded-xl bg-gradient-to-r from-primary to-purple-600 text-white font-semibold hover:shadow-xl hover:shadow-primary/25 transition-all duration-300 transform hover:-translate-y-1 disabled:opacity-70 disabled:cursor-not-allowed disabled:transform-none flex items-center justify-center gap-2"
+          className="w-full h-12 rounded-xl bg-gradient-to-r from-primary to-purple-600 text-white font-semibold hover:shadow-xl transition-all duration-300 flex items-center justify-center gap-2 disabled:opacity-70"
         >
           {downloading ? (
             <>
@@ -231,27 +199,26 @@ export function Sidebar() {
           )}
         </button>
 
-        {/* Theme Toggle */}
+        {/* THEME TOGGLE */}
         <button
           onClick={toggleTheme}
-          className="w-full h-12 rounded-xl bg-gradient-to-br from-accent to-accent/50 border border-border text-foreground hover:border-primary transition-all duration-300 flex items-center justify-center gap-3"
-          aria-label="Toggle theme"
+          className="w-full h-12 rounded-xl bg-accent border border-border hover:border-primary transition-all duration-300 flex items-center justify-center gap-3"
         >
-          {theme === 'light' ? (
+          {theme === "light" ? (
             <>
               <Moon className="w-4 h-4" />
-              <span className="font-medium">Dark Mode</span>
+              Dark Mode
             </>
           ) : (
             <>
               <Sun className="w-4 h-4" />
-              <span className="font-medium">Light Mode</span>
+              Light Mode
             </>
           )}
         </button>
       </div>
 
-      {/* Add CSS animation for success message */}
+      {/* ANIMATION */}
       <style jsx>{`
         @keyframes slide-down {
           0% {

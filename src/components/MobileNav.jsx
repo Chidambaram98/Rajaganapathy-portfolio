@@ -1,5 +1,18 @@
 import { useState, useEffect } from 'react';
-import { Menu, X, Moon, Sun, Home, User, Code, Briefcase, FolderOpen, GraduationCap, Mail, ChevronRight } from 'lucide-react';
+import {
+  Menu,
+  X,
+  Moon,
+  Sun,
+  User,
+  Home,
+  Code,
+  Briefcase,
+  FolderOpen,
+  GraduationCap,
+  Mail,
+  ChevronRight
+} from 'lucide-react';
 import { useTheme } from '../context/ThemeContext';
 
 export function MobileNav() {
@@ -9,6 +22,7 @@ export function MobileNav() {
 
   const navItems = [
     { id: 'about', label: 'Home', icon: Home },
+    { id: 'synopsis', label: 'Synopsis', icon: User },
     { id: 'skills', label: 'Skills', icon: Code },
     { id: 'experience', label: 'Experience', icon: Briefcase },
     { id: 'projects', label: 'Projects', icon: FolderOpen },
@@ -16,188 +30,211 @@ export function MobileNav() {
     { id: 'contact', label: 'Contact', icon: Mail },
   ];
 
+  // ✅ FIXED SCROLL SPY
   useEffect(() => {
     const handleScroll = () => {
-      const sections = navItems.map(item => item.id);
-      const scrollPosition = window.scrollY + 100;
+      const headerOffset = 120; // height of fixed header
+      const scrollPosition = window.scrollY + headerOffset;
 
-      for (let i = sections.length - 1; i >= 0; i--) {
-        const section = document.getElementById(sections[i]);
-        if (section && section.offsetTop <= scrollPosition) {
-          setActiveSection(sections[i]);
-          break;
+      let currentSection = navItems[0].id;
+
+      for (let item of navItems) {
+        const section = document.getElementById(item.id);
+        if (section) {
+          const sectionTop = section.offsetTop;
+          const sectionHeight = section.offsetHeight;
+
+          if (
+            scrollPosition >= sectionTop &&
+            scrollPosition < sectionTop + sectionHeight
+          ) {
+            currentSection = item.id;
+            break;
+          }
         }
       }
+
+      setActiveSection(currentSection);
     };
 
     window.addEventListener('scroll', handleScroll);
+    handleScroll();
+
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  // ✅ FIXED SCROLL FUNCTION (header offset handled)
   const scrollToSection = (sectionId) => {
     const element = document.getElementById(sectionId);
+
     if (element) {
-      element.scrollIntoView({ 
-        behavior: 'smooth', 
-        block: 'start' 
-      });
+      const yOffset = -100;
+      const y =
+        element.getBoundingClientRect().top +
+        window.pageYOffset +
+        yOffset;
+
+      window.scrollTo({ top: y, behavior: 'smooth' });
       setIsOpen(false);
     }
   };
 
   return (
     <>
-      {/* Mobile Header */}
-      <header className="lg:hidden fixed top-0 left-0 right-0 z-50 bg-gradient-to-r from-background/95 via-background/95 to-background/95 backdrop-blur-lg border-b border-border/50 shadow-lg">
+      {/* MOBILE HEADER */}
+      <header className="lg:hidden fixed top-0 left-0 right-0 z-50 bg-background/95 backdrop-blur-lg border-b border-border shadow-md">
         <div className="flex items-center justify-between px-4 py-3.5">
+          {/* Profile */}
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-full bg-gradient-to-br from-primary to-purple-500 flex items-center justify-center">
-              <span className="text-lg font-bold text-white">CS</span>
+            <div className="w-10 h-10 rounded-full bg-gradient-to-br from-primary to-purple-500 flex items-center justify-center shadow-md">
+              <span className="text-lg font-bold text-white">RG</span>
             </div>
             <div>
-              <h2 className="text-base font-bold text-foreground">Chidambaram S</h2>
-              <p className="text-xs text-primary font-medium">Software Engineer</p>
+              <h2 className="text-base font-bold text-foreground">
+                Rajaganapathy
+              </h2>
+              <p className="text-xs text-primary font-medium">
+                Flutter Developer
+              </p>
             </div>
           </div>
-          
+
+          {/* Actions */}
           <div className="flex items-center gap-2">
             <button
               onClick={toggleTheme}
-              className="p-2.5 rounded-xl bg-gradient-to-br from-primary/10 to-primary/5 border border-primary/20 text-foreground hover:bg-primary hover:text-white transition-all duration-300 min-w-[44px] min-h-[44px] flex items-center justify-center group"
-              aria-label="Toggle theme"
+              className="p-2.5 rounded-xl bg-primary/10 border border-primary/20 hover:bg-primary hover:text-white transition-all duration-300"
             >
               {theme === 'light' ? (
-                <Moon className="w-5 h-5 group-hover:scale-110 transition-transform" />
+                <Moon className="w-5 h-5" />
               ) : (
-                <Sun className="w-5 h-5 group-hover:scale-110 transition-transform" />
+                <Sun className="w-5 h-5" />
               )}
             </button>
-            
+
             <button
               onClick={() => setIsOpen(!isOpen)}
-              className="p-2.5 rounded-xl bg-gradient-to-br from-primary/10 to-primary/5 border border-primary/20 text-foreground hover:bg-primary hover:text-white transition-all duration-300 min-w-[44px] min-h-[44px] flex items-center justify-center group"
-              aria-label="Toggle menu"
+              className="p-2.5 rounded-xl bg-primary/10 border border-primary/20 hover:bg-primary hover:text-white transition-all duration-300"
             >
               {isOpen ? (
-                <X className="w-5 h-5 group-hover:rotate-90 transition-transform" />
+                <X className="w-5 h-5 rotate-90 transition-transform" />
               ) : (
-                <Menu className="w-5 h-5 group-hover:rotate-180 transition-transform" />
+                <Menu className="w-5 h-5 transition-transform" />
               )}
             </button>
           </div>
         </div>
 
-        {/* Mobile Progress Bar */}
-        <div className="absolute bottom-0 left-0 right-0 h-1 bg-border/50">
-          <div 
+        {/* Progress Bar */}
+        <div className="h-1 bg-border">
+          <div
             className="h-full bg-gradient-to-r from-primary to-purple-500 transition-all duration-300"
-            style={{ 
-              width: `${(navItems.findIndex(item => item.id === activeSection) + 1) * (100 / navItems.length)}%` 
+            style={{
+              width: `${
+                ((navItems.findIndex(
+                  (item) => item.id === activeSection
+                ) +
+                  1) *
+                  100) /
+                navItems.length
+              }%`
             }}
           />
         </div>
       </header>
 
-      {/* Mobile Menu Overlay */}
-      {isOpen && (
-        <div className="lg:hidden fixed inset-0 z-40 bg-background/95 backdrop-blur-lg">
-          <div className="h-full flex flex-col">
-            {/* Header */}
-            <div className="p-6 border-b border-border/50">
-              <div className="flex items-center justify-between mb-6">
-                <div className="flex items-center gap-3">
-                  <div className="w-14 h-14 rounded-full bg-gradient-to-br from-primary to-purple-500 flex items-center justify-center">
-                    <span className="text-2xl font-bold text-white">CS</span>
-                  </div>
-                  <div>
-                    <h2 className="text-xl font-bold text-foreground">Chidambaram Senapathy</h2>
-                    <p className="text-sm text-primary font-medium">Full Stack Developer</p>
-                  </div>
-                </div>
-                <button
-                  onClick={() => setIsOpen(false)}
-                  className="p-2 rounded-xl hover:bg-accent transition-colors"
-                >
-                  <X className="w-6 h-6" />
-                </button>
-              </div>
-              
-              <div className="text-center">
-                <p className="text-sm text-muted-foreground">
-                  Crafting digital experiences with code & creativity
-                </p>
-              </div>
-            </div>
+      {/* MOBILE MENU */}
+      <div
+        className={`lg:hidden fixed inset-0 z-40 bg-background/95 backdrop-blur-lg transform transition-all duration-300 ${
+          isOpen
+            ? 'translate-x-0 opacity-100'
+            : 'translate-x-full opacity-0 pointer-events-none'
+        }`}
+      >
+        <div className="h-full flex flex-col pt-20">
 
-            {/* Navigation Menu */}
-            <nav className="flex-1 p-6 overflow-y-auto">
-              <ul className="space-y-2">
-                {navItems.map((item) => {
-                  const Icon = item.icon;
-                  const isActive = activeSection === item.id;
-                  
-                  return (
-                    <li key={item.id}>
-                      <button
-                        onClick={() => scrollToSection(item.id)}
-                        className={`w-full text-left px-4 py-4 rounded-2xl transition-all duration-300 flex items-center justify-between group ${
-                          isActive 
-                            ? 'bg-gradient-to-r from-primary/10 to-primary/5 border border-primary/20 text-primary' 
-                            : 'hover:bg-accent text-foreground'
-                        }`}
-                      >
-                        <div className="flex items-center gap-4">
-                          <div className={`w-10 h-10 rounded-xl flex items-center justify-center ${
-                            isActive 
-                              ? 'bg-gradient-to-br from-primary to-purple-500 text-white' 
-                              : 'bg-accent text-foreground/60 group-hover:text-primary'
-                          }`}>
-                            <Icon className="w-5 h-5" />
-                          </div>
-                          <span className="font-medium">{item.label}</span>
+          {/* Tagline */}
+          <div className="px-6 mb-6 text-center">
+            <p className="text-sm text-muted-foreground">
+              Building scalable and high-performance mobile applications
+            </p>
+          </div>
+
+          {/* NAVIGATION */}
+          <nav className="flex-1 px-6 overflow-y-auto">
+            <ul className="space-y-3">
+              {navItems.map((item) => {
+                const Icon = item.icon;
+                const isActive = activeSection === item.id;
+
+                return (
+                  <li key={item.id}>
+                    <button
+                      onClick={() => scrollToSection(item.id)}
+                      className={`w-full px-4 py-4 rounded-2xl flex items-center justify-between transition-all duration-300 ${
+                        isActive
+                          ? 'bg-gradient-to-r from-primary/15 to-primary/5 border border-primary/30 text-primary shadow-md'
+                          : 'hover:bg-accent text-foreground'
+                      }`}
+                    >
+                      <div className="flex items-center gap-4">
+                        <div
+                          className={`w-10 h-10 rounded-xl flex items-center justify-center ${
+                            isActive
+                              ? 'bg-gradient-to-br from-primary to-purple-500 text-white'
+                              : 'bg-accent text-muted-foreground'
+                          }`}
+                        >
+                          <Icon className="w-5 h-5" />
                         </div>
-                        <ChevronRight className={`w-5 h-5 transition-transform ${
-                          isActive ? 'text-primary' : 'text-muted-foreground group-hover:text-primary group-hover:translate-x-1'
-                        }`} />
-                      </button>
-                    </li>
-                  );
-                })}
-              </ul>
+                        <span className="font-medium">
+                          {item.label}
+                        </span>
+                      </div>
 
-              {/* Quick Stats */}
-              <div className="mt-8 p-4 bg-gradient-to-br from-primary/5 to-primary/10 border border-primary/20 rounded-2xl">
-                <div className="grid grid-cols-2 gap-4">
-                  <div className="text-center">
-                    <p className="text-2xl font-bold text-foreground">2+</p>
-                    <p className="text-xs text-muted-foreground">Years Exp</p>
-                  </div>
-                  <div className="text-center">
-                    <p className="text-2xl font-bold text-foreground">10+</p>
-                    <p className="text-xs text-muted-foreground">Projects</p>
-                  </div>
+                      <ChevronRight
+                        className={`w-5 h-5 transition-transform ${
+                          isActive
+                            ? 'text-primary'
+                            : 'text-muted-foreground'
+                        }`}
+                      />
+                    </button>
+                  </li>
+                );
+              })}
+            </ul>
+
+            {/* Quick Stats */}
+            <div className="mt-8 p-5 bg-gradient-to-br from-primary/5 to-primary/10 border border-primary/20 rounded-2xl text-center shadow-sm">
+              <div className="grid grid-cols-2 gap-6">
+                <div>
+                  <p className="text-2xl font-bold text-foreground">2+</p>
+                  <p className="text-xs text-muted-foreground">Years Exp</p>
+                </div>
+                <div>
+                  <p className="text-2xl font-bold text-foreground">5+</p>
+                  <p className="text-xs text-muted-foreground">Live Apps</p>
                 </div>
               </div>
-            </nav>
-
-            {/* Footer CTA */}
-            <div className="p-6 border-t border-border/50">
-              <button
-                onClick={() => scrollToSection('contact')}
-                className="w-full py-4 bg-gradient-to-r from-primary to-purple-600 text-white rounded-2xl font-semibold hover:shadow-xl hover:shadow-primary/25 transition-all duration-300 transform hover:-translate-y-1"
-              >
-                Let's Connect
-              </button>
-              
-              <div className="mt-4 text-center">
-                <p className="text-xs text-muted-foreground">
-                  © {new Date().getFullYear()} Chidambaram S
-                </p>
-              </div>
             </div>
+          </nav>
+
+          {/* FOOTER */}
+          <div className="p-6 border-t border-border">
+            <button
+              onClick={() => scrollToSection('contact')}
+              className="w-full py-4 bg-gradient-to-r from-primary to-purple-600 text-white rounded-2xl font-semibold hover:shadow-xl hover:shadow-primary/30 transition-all duration-300"
+            >
+              Let's Connect
+            </button>
+
+            <p className="mt-4 text-center text-xs text-muted-foreground">
+              © {new Date().getFullYear()} Rajaganapathy
+            </p>
           </div>
         </div>
-      )}
+      </div>
     </>
   );
 }

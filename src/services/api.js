@@ -17,7 +17,7 @@ export const api = {
       
       // Get filename from Content-Disposition header or use default
       const contentDisposition = response.headers.get('content-disposition');
-      let filename = 'Chidambaram_Senapathy_Resume.pdf';
+      let filename = 'Rajaganapathy_Resume.pdf';
       
       if (contentDisposition) {
         const filenameMatch = contentDisposition.match(/filename="?(.+?)"?$/);

@@ -1,7 +1,8 @@
-import { Download, Eye, ChevronDown, Sparkles, Code, Server, Database, Zap, Loader2, CheckCircle } from 'lucide-react';
+import { Download, Eye, ChevronDown,Smartphone,Upload,Layers, Sparkles, Code, Server, Database, Zap, Loader2, CheckCircle } from 'lucide-react';
 import { useState, useEffect } from 'react';
 import { TypeAnimation } from 'react-type-animation';
 import { api } from '../services/api'; 
+import resumePDF from "../assets/raja_ganapathy_resume.pdf";
 
 export function HeroSection() {
   const [downloading, setDownloading] = useState(false);
@@ -24,39 +25,41 @@ export function HeroSection() {
     try {
       setDownloading(true);
       setDownloadSuccess(false);
-      
-      // Use the API service to download resume
-      await api.downloadResume();
-      
-      // Show success message
-      setDownloadSuccess(true);
-      
-      // Hide success message after 3 seconds
-      setTimeout(() => {
-        setDownloadSuccess(false);
-      }, 3000);
-      
-    } catch (error) {
-      console.error('Resume download error:', error);
-      
-      // Fallback: Try direct download from public folder
-      try {
-        const link = document.createElement('a');
-        link.href = '/Chidambaram_Resume.pdf';
-        link.download = 'Chidambaram_Senapathy_Resume.pdf';
-        link.target = '_blank';
+
+      // Try Local Resume First
+      if (resumePDF) {
+        const link = document.createElement("a");
+        link.href = resumePDF;
+        link.download = "Raja_Ganapathy_Resume.pdf";
+        link.target = "_blank";
         document.body.appendChild(link);
         link.click();
         document.body.removeChild(link);
-      } catch (fallbackError) {
-        console.error('Fallback also failed:', fallbackError);
-        alert('Unable to download resume. Please try again or email me at chidambaramsenapathy@gmail.com');
+
+        setDownloadSuccess(true);
+      } else {
+        throw new Error("Local resume not found");
+      }
+    } catch (localError) {
+      console.warn("Local resume failed. Trying API...", localError);
+
+      try {
+        await api.downloadResume();
+        setDownloadSuccess(true);
+      } catch (apiError) {
+        console.error("API download failed:", apiError);
+        alert(
+          "Unable to download resume. Please try again or email me at rajaganapathy032@gmail.com"
+        );
       }
     } finally {
       setDownloading(false);
+
+      setTimeout(() => {
+        setDownloadSuccess(false);
+      }, 3000);
     }
   };
-
   const scrollToSection = (sectionId) => {
     const element = document.getElementById(sectionId);
     if (element) {
@@ -110,22 +113,20 @@ export function HeroSection() {
 
             <div>
               <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-foreground mb-4 leading-tight">
-                <span className="block">Chidambaram</span>
-                <span className="block text-transparent bg-clip-text bg-gradient-to-r from-primary via-purple-500 to-pink-500">
+                <span className="block">Raja Ganapathy</span>
+                {/* <span className="block text-transparent bg-clip-text bg-gradient-to-r from-primary via-purple-500 to-pink-500">
                   Senapathy
-                </span>
+                </span> */}
               </h1>
               
               <div className="h-12 mb-4">
                 <TypeAnimation
                   sequence={[
-                    'Full Stack Developer',
+                    'Associate Software Engineer',
                     1500,
-                    'Backend API Specialist',
+                    'Flutter Developer',
                     1500,
-                    'Automation Expert',
-                    1500,
-                    'JavaScript Enthusiast',
+                    'Mobile App Developer',
                     1500,
                   ]}
                   wrapper="span"
@@ -136,14 +137,14 @@ export function HeroSection() {
               </div>
             </div>
 
-            <p className="text-base sm:text-lg md:text-xl text-foreground/80 leading-relaxed max-w-2xl">
-              Crafting scalable web applications with <span className="text-primary font-semibold">JavaScript</span>, <span className="text-primary font-semibold">Node.js</span>, and <span className="text-primary font-semibold">React</span>. 
-              Passionate about backend optimization, API development, and automation solutions that drive efficiency.
-            </p>
+          <p className="text-base sm:text-lg md:text-xl text-foreground/80 leading-relaxed max-w-2xl">
+            Building scalable cross-platform mobile applications with <span className="text-primary font-semibold">Flutter</span> and <span className="text-primary font-semibold">Dart</span>. 
+            Passionate about clean architecture, efficient state management, and seamless <span className="text-primary font-semibold">REST API integration</span> to deliver high-performance Android and iOS apps.
+          </p>
 
-            {/* Tech Badges */}
+           {/* Tech Badges */}
             <div className="flex flex-wrap gap-3">
-              {['JavaScript', 'Node.js', 'React', 'MongoDB', 'Express.js', 'MySQL', 'Java', 'PHP'].map((tech, index) => (
+              {['Flutter', 'Dart', 'Riverpod', 'GetX', 'REST APIs', 'Dio', 'Firebase', 'Git'].map((tech, index) => (
                 <div
                   key={tech}
                   className="px-4 py-2 bg-gradient-to-r from-primary/10 to-primary/5 border border-primary/20 rounded-full backdrop-blur-sm hover:border-primary/40 transition-all duration-300 animate-slide-up"
@@ -153,6 +154,7 @@ export function HeroSection() {
                 </div>
               ))}
             </div>
+
 
             {/* CTA Buttons */}
             <div className="flex flex-col sm:flex-row gap-4 pt-4">
@@ -192,16 +194,16 @@ export function HeroSection() {
               <div className="absolute -top-8 -left-8 w-64 h-72 bg-gradient-to-br from-primary/20 to-purple-500/20 rounded-2xl backdrop-blur-sm border border-primary/30 rotate-6 animate-float">
                 <div className="p-6">
                   <Code className="w-10 h-10 text-primary mb-4" />
-                  <h3 className="text-lg font-semibold text-foreground mb-2">Full Stack Dev</h3>
-                  <p className="text-sm text-foreground/70">React, Node.js, Express.js</p>
+                  <h3 className="text-lg font-semibold text-foreground mb-2">Flutter Developer</h3>
+                  <p className="text-sm text-foreground/70">Flutter, Dart, Riverpod</p>
                 </div>
               </div>
 
               <div className="absolute -bottom-8 -right-8 w-64 h-72 bg-gradient-to-br from-purple-500/20 to-pink-500/20 rounded-2xl backdrop-blur-sm border border-purple-300/30 -rotate-6 animate-float-delayed">
                 <div className="p-6">
                   <Server className="w-10 h-10 text-purple-500 mb-4" />
-                  <h3 className="text-lg font-semibold text-foreground mb-2">Backend APIs</h3>
-                  <p className="text-sm text-foreground/70">25-30% Performance Boost</p>
+                  <h3 className="text-lg font-semibold text-foreground mb-2">Mobile Architecture</h3>
+                  <p className="text-sm text-foreground/70">5+ Production Apps</p>
                 </div>
               </div>
 
@@ -218,11 +220,11 @@ export function HeroSection() {
                 {/* Content */}
                 <div className="relative h-full flex flex-col items-center justify-center p-8">
                   <div className="w-32 h-32 rounded-full bg-gradient-to-br from-primary to-purple-500 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-500">
-                    <span className="text-4xl font-bold text-white">CS</span>
+                    <span className="text-4xl font-bold text-white">RG</span>
                   </div>
-                  <h3 className="text-2xl font-bold text-foreground mb-2">Chidambaram S</h3>
-                  <p className="text-primary font-medium">Software Engineer</p>
-                  <p className="text-sm text-muted-foreground mt-4 text-center">CAFS Organization | 2024-2025</p>
+                  <h3 className="text-2xl font-bold text-foreground mb-2">Raja Ganapathy D</h3>
+                  <p className="text-primary font-medium">Associate Software Engineer</p>
+                  <p className="text-sm text-muted-foreground mt-4 text-center">CAFS Infotech Pvt Ltd | Mar 2024 - Present</p>
                 </div>
               </div>
             </div>
@@ -231,31 +233,39 @@ export function HeroSection() {
 
         {/* Quick Stats */}
         <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mt-16 lg:mt-24 pt-12 border-t border-border/50">
+
           {[
             { value: '2+', label: 'Years Experience', icon: Zap, color: 'text-yellow-500' },
-            { value: '5+', label: 'Projects Completed', icon: Code, color: 'text-primary' },
-            { value: '30%', label: 'Performance Boost', icon: Server, color: 'text-purple-500' },
-            { value: '8+', label: 'Tech Stack', icon: Database, color: 'text-pink-500' },
+            { value: '5+', label: 'Production Apps', icon: Smartphone, color: 'text-primary' },
+            { value: 'Android & iOS', label: 'App Deployment', icon: Upload, color: 'text-blue-500' },
+            { value: '8+', label: 'Flutter Tech Stack', icon: Layers, color: 'text-cyan-500' },
           ].map((stat, index) => (
-            <div 
+            
+            <div
               key={index}
-              className="group p-6 bg-card/30 backdrop-blur-sm border border-border rounded-2xl hover:border-primary/30 transition-all duration-300 animate-slide-up"
+              className="group h-full min-h-[140px] p-6 bg-card/30 backdrop-blur-sm border border-border rounded-2xl hover:border-primary/30 transition-all duration-300 animate-slide-up flex flex-col justify-between"
               style={{ animationDelay: `${index * 150}ms` }}
             >
-              <div className="flex items-center gap-4">
-                <div className={`p-3 rounded-xl bg-gradient-to-br ${stat.color.replace('text-', 'bg-')}/10 ${stat.color.replace('text-', 'border-')}/20 border`}>
+              {/* Icon */}
+              <div className="mb-4">
+                <div className={`inline-flex p-3 rounded-xl bg-gradient-to-br ${stat.color.replace('text-', 'bg-')}/10 border ${stat.color.replace('text-', 'border-')}/20`}>
                   <stat.icon className={`w-6 h-6 ${stat.color}`} />
                 </div>
-                <div>
-                  <p className="text-2xl md:text-3xl font-bold text-foreground group-hover:text-primary transition-colors">
-                    {stat.value}
-                  </p>
-                  <p className="text-sm text-muted-foreground">{stat.label}</p>
-                </div>
+              </div>
+
+              {/* Content */}
+              <div>
+                <p className="text-xl md:text-2xl font-bold text-foreground leading-snug group-hover:text-primary transition-colors break-words">
+                  {stat.value}
+                </p>
+                <p className="text-sm text-muted-foreground mt-1">
+                  {stat.label}
+                </p>
               </div>
             </div>
           ))}
         </div>
+
       </div>
 
       {/* Add CSS for animations */}

@@ -1,69 +1,86 @@
-import { Zap, Code, Server, Database, Terminal, Cpu, Layers, Palette } from 'lucide-react';
+import { Zap, Smartphone, Layers, Database, Terminal } from 'lucide-react';
 
 export function SkillsSection() {
   const techCategories = [
     {
-      title: 'Frontend',
-      icon: Code,
+      title: 'Mobile Development',
+      icon: Smartphone,
       color: 'from-blue-500 to-cyan-500',
       skills: [
-        'React.js', 'JavaScript', 'HTML5', 'CSS3', 
-        'Tailwind CSS', 'Material UI'
+        'Flutter', 
+        'Dart', 
+        'Android Deployment', 
+        'iOS Deployment',
+        'Responsive UI Design'
       ]
     },
     {
-      title: 'Backend',
-      icon: Server,
+      title: 'State Management',
+      icon: Layers,
       color: 'from-purple-500 to-pink-500',
       skills: [
-        'Node.js', 'Express.js','Java', 'Spring Boot', 'PHP'
+        'Riverpod', 
+        'SetState', 
+        'GetX',
+        'Clean Architecture'
       ]
     },
     {
-      title: 'Database',
+      title: 'API & Integration',
       icon: Database,
       color: 'from-green-500 to-emerald-500',
       skills: [
-        'MongoDB', 'MySQL'
+        'REST APIs', 
+        'Dio', 
+        'Authentication', 
+        'Firebase (FCM)'
       ]
     },
     {
-      title: 'Tools & Others',
+      title: 'Tools & Deployment',
       icon: Terminal,
       color: 'from-orange-500 to-red-500',
       skills: [
-        'Git', 'GitHub', 'Postman', 'Puppeteer', 
-        'JWT', 'OAuth'
+        'Git', 
+        'Play Store Release', 
+        'App Store Deployment', 
+        'Android Studio'
       ]
     }
   ];
 
   const allTech = [
-    'JavaScript', 'Node.js', 'React', 'Express.js',
-    'MongoDB', 'MySQL',  'HTML5/CSS3',
-    'Tailwind CSS', 'Git', 'Postman', 'Puppeteer',
-    'Java', 'PHP', 'JWT',
-    'Spring Boot'
+    'Flutter', 
+    'Dart', 
+    'Riverpod', 
+    'GetX',
+    'REST API Integration',
+    'Dio',
+    'Firebase',
+    'Android',
+    'iOS',
+    'Git',
+    'Clean Architecture'
   ];
 
   return (
     <section id="skills" className="relative py-20 sm:py-24 px-4 sm:px-6 md:px-8 overflow-hidden">
       {/* Background Pattern */}
-      <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-purple-500/5 to-pink-500/5">
+      <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-blue-500/5 to-cyan-500/5">
         <div className="absolute inset-0 bg-grid-pattern opacity-5"></div>
       </div>
       
-      <div className="relative z-10 max-w-7xl  px-6 w-full mx-auto">
+      <div className="relative z-10 max-w-7xl px-6 w-full mx-auto">
         <div className="text-center mb-16">
           <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 border border-primary/20 mb-4">
             <Zap className="w-4 h-4 text-primary" />
-            <span className="text-sm font-medium text-primary">Technology Stack</span>
+            <span className="text-sm font-medium text-primary">Flutter Tech Stack</span>
           </div>
           <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-foreground mb-4">
-            Technical <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-purple-500">Skills</span>
+            Technical <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-blue-500">Skills</span>
           </h2>
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-            Technologies and tools I work with
+            Technologies and tools I use to build scalable mobile applications
           </p>
         </div>
 
