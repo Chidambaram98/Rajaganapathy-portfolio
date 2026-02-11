@@ -28,7 +28,7 @@ export function HeroSection() {
       // Try Local Resume First
         const link = document.createElement("a");
         link.href = "/raja_ganapathy_resume.pdf"; 
-        link.download = "Raja_Ganapathy_Resume.pdf";
+        link.download = "Rajaganapathy_Resume.pdf";
         link.target = "_blank";
         document.body.appendChild(link);
         link.click();

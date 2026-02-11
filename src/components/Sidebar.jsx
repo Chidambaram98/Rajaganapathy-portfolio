@@ -56,7 +56,7 @@ export function Sidebar() {
 
       const link = document.createElement("a");
       link.href = "/raja_ganapathy_resume.pdf"; 
-      link.download = "Raja_Ganapathy_Resume.pdf";
+      link.download = "Rajaganapathy_Resume.pdf";
       document.body.appendChild(link);
       link.click();
       document.body.removeChild(link);
